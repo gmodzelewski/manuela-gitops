@@ -1,0 +1,105 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    deployment.kubernetes.io/revision: "2"
+    kubectl.kubernetes.io/last-applied-configuration: |
+      {"apiVersion":"apps/v1","kind":"Deployment","metadata":{"annotations":{},"labels":{"app.kubernetes.io/instance":"manuela-quickstart-line-dashboard","app.kubernetes.io/part-of":"ManuELA","application":"line-dashboard","template":"openjdk18-web-basic-s2i"},"name":"line-dashboard","namespace":"manuela-quickstart-line-dashboard"},"spec":{"replicas":1,"revisionHistoryLimit":10,"selector":{"matchLabels":{"deploymentconfig":"line-dashboard"}},"template":{"metadata":{"labels":{"app":"line-dashboard","deploymentconfig":"line-dashboard"},"name":"line-dashboard"},"spec":{"containers":[{"image":"quay.io/manuela/iot-frontend:quickstart","imagePullPolicy":"Always","livenessProbe":{"failureThreshold":3,"httpGet":{"path":"/home","port":8080,"scheme":"HTTP"},"initialDelaySeconds":15,"periodSeconds":10,"successThreshold":1,"timeoutSeconds":1},"name":"line-dashboard","ports":[{"containerPort":8080,"name":"http","protocol":"TCP"}],"readinessProbe":{"failureThreshold":3,"httpGet":{"path":"/home","port":8080,"scheme":"HTTP"},"initialDelaySeconds":15,"periodSeconds":10,"successThreshold":1,"timeoutSeconds":1},"resources":{},"terminationMessagePath":"/dev/termination-log","terminationMessagePolicy":"File","volumeMounts":[{"mountPath":"/var/www/html/conf/config.json","name":"line-dashboard-configmap-vol","subPath":"config.json"},{"mountPath":"/opt/app-root/output/conf/config.json","name":"line-dashboard-configmap-vol","subPath":"config.json"}]}],"volumes":[{"configMap":{"defaultMode":438,"name":"line-dashboard-configmap-f5dt8bb8bm"},"name":"line-dashboard-configmap-vol"}]}}}}
+  creationTimestamp: "2022-06-24T11:53:22Z"
+  generation: 2
+  labels:
+    app.kubernetes.io/instance: manuela-quickstart-line-dashboard
+    app.kubernetes.io/part-of: ManuELA
+    application: line-dashboard
+    template: openjdk18-web-basic-s2i
+  name: line-dashboard
+  namespace: manuela-quickstart-line-dashboard
+  resourceVersion: "6334755"
+  uid: 653da696-9c17-4097-9551-45225764ad0c
+spec:
+  progressDeadlineSeconds: 600
+  replicas: 1
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      deploymentconfig: line-dashboard
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: line-dashboard
+        deploymentconfig: line-dashboard
+      name: line-dashboard
+    spec:
+      containers:
+      - image: quay.io/manuela/iot-frontend:quickstart
+        imagePullPolicy: Always
+        livenessProbe:
+          failureThreshold: 3
+          httpGet:
+            path: /home
+            port: 8080
+            scheme: HTTP
+          initialDelaySeconds: 15
+          periodSeconds: 10
+          successThreshold: 1
+          timeoutSeconds: 1
+        name: line-dashboard
+        ports:
+        - containerPort: 8080
+          name: http
+          protocol: TCP
+        readinessProbe:
+          failureThreshold: 3
+          httpGet:
+            path: /home
+            port: 8080
+            scheme: HTTP
+          initialDelaySeconds: 15
+          periodSeconds: 10
+          successThreshold: 1
+          timeoutSeconds: 1
+        resources: {}
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+        volumeMounts:
+        - mountPath: /var/www/html/conf/config.json
+          name: line-dashboard-configmap-vol
+          subPath: config.json
+        - mountPath: /opt/app-root/output/conf/config.json
+          name: line-dashboard-configmap-vol
+          subPath: config.json
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
+      volumes:
+      - configMap:
+          defaultMode: 438
+          name: line-dashboard-configmap-f5dt8bb8bm
+        name: line-dashboard-configmap-vol
+status:
+  availableReplicas: 1
+  conditions:
+  - lastTransitionTime: "2022-06-24T11:53:52Z"
+    lastUpdateTime: "2022-06-24T11:53:52Z"
+    message: Deployment has minimum availability.
+    reason: MinimumReplicasAvailable
+    status: "True"
+    type: Available
+  - lastTransitionTime: "2022-06-24T11:53:22Z"
+    lastUpdateTime: "2022-06-24T12:15:20Z"
+    message: ReplicaSet "line-dashboard-744db59d5b" has successfully progressed.
+    reason: NewReplicaSetAvailable
+    status: "True"
+    type: Progressing
+  observedGeneration: 2
+  readyReplicas: 1
+  replicas: 1
+  updatedReplicas: 1
